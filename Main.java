@@ -12,7 +12,7 @@ class Main {
     public static void main(String[] args) {
         while(true) {
             try {
-                int ex = menu();
+                int ex = ReadMenu();
                 switch(ex) {
                     case 1: exercise1(); break;
                     case 2: exercise2(); break;
@@ -30,16 +30,22 @@ class Main {
             catch(WrongStudentDate e) {
                 System.out.println("Błędna data!");
             }
+          catch(WrongMenu e) {
+                System.out.println("Błędna opcja!");
+            }
         }
     }
 
-    public static int menu() {
+    public static int ReadMenu() throws WrongMenu {
         System.out.println("Wciśnij:");
         System.out.println("1 - aby dodać studenta");
         System.out.println("2 - aby wypisać wszystkich studentów");
         System.out.println("3 - aby wyszukać studenta po imieniu");
         System.out.println("0 - aby wyjść z programu");
-        return scan.nextInt();
+      int menu = scan.nextInt();
+      if(menu<0 || menu>3)
+        throw new WrongMenu();
+        return menu;
     }
 
     public static String ReadName() throws WrongStudentName {
@@ -70,7 +76,7 @@ class Main {
     }
   
     public static void exercise1() throws IOException ,
-      WrongStudentName,WrongStudentAge,WrongStudentDate{
+      WrongStudentName,WrongStudentAge,WrongStudentDate,WrongMenu{
         var name = ReadName();
         var age = ReadAge();
         var date = ReadDate();
